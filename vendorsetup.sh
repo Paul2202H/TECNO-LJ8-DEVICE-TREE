@@ -1,63 +1,46 @@
-#
-#	This file is part of the OrangeFox Recovery Project
-# 	Copyright (C) 2024-2025 The OrangeFox Recovery Project
-#
-#	OrangeFox is free software: you can redistribute it and/or modify
-#	it under the terms of the GNU General Public License as published by
-#	the Free Software Foundation, either version 3 of the License, or
-#	any later version.
-#
-#	OrangeFox is distributed in the hope that it will be useful,
-#	but WITHOUT ANY WARRANTY; without even the implied warranty of
-#	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#	GNU General Public License for more details.
-#
-# 	This software is released under GPL version 3 or any later version.
-#	See <http://www.gnu.org/licenses/>.
-#
-# 	Please maintain this if you use this script or any part of it
-#
+#!/bin/bash
+export OF_DISABLE_OTA_MENU=1
+export FOX_AB_DEVICE=1
+export FOX_VIRTUAL_AB_DEVICE=1
+export OF_DEFAULT_KEYMASTER_VERSION=4.1
+export OF_NO_TREBLE_COMPATIBILITY_CHECK=1
+export OF_MAINTAINER="Vale"
+export OF_MAINTAINER_AVATAR="device/infinix/X6820/author.png"
+export FOX_VARIANT="A12+"
+export OF_FLASHLIGHT_ENABLE=0
+export OF_ENABLE_LPTOOLS=1
+#export FOX_DELETE_MAGISK_ADDON=1
+export FOX_DELETE_AROMAFM=1
+export FOX_ENABLE_APP_MANAGER=0
+export OF_SUPPORT_VBMETA_AVB2_PATCHING=1
+#export FOX_USE_DATA_RECOVERY_FOR_SETTINGS=1
+export OF_LOOP_DEVICE_ERRORS_TO_LOG=1
+#export FOX_DRASTIC_SIZE_REDUCTION=1
 
-#set -o xtrace
-FDEVICE="X6851B"
+# Magisk Boot Patch.
+export OF_USE_MAGISKBOOT="1"
+export OF_USE_MAGISKBOOT_FOR_ALL_PATCHES="1"
+export OF_DONT_PATCH_ENCRYPTED_DEVICE="1"
 
-fetch_mt6855_common_repo() {
-	local URL=https://github.com/RamaBP-Recovery-Project/twrp-device_transsion_mt6855-common
-	local common=device/transsion/mt6855-common
-	if [ ! -d $common ]; then
-		echo "Cloning $URL ... to $common"
-		git clone $URL -b fox_12.1-tos15 $common
-	else
-		echo "Device common repository: \"$common\" found ..."
-	fi
-}
+export OF_SCREEN_H=2460
+export OF_STATUS_H=95
+export OF_STATUS_INDENT_LEFT=48
+export OF_STATUS_INDENT_RIGHT=48
+export OF_ALLOW_DISABLE_NAVBAR=0
+export OF_CLOCK_POS=1
 
-FOX_BUILD_DEVICE="$FDEVICE"
+export USE_CCACHE=1
+export CCACHE_EXEC=/usr/bin/ccache
+export CCACHE_MAXSIZE="5G"
+export CCACHE_DIR="~/ccache"
 
-if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
-	# Clone to fix build on minimal manifest
-	git clone https://android.googlesource.com/platform/external/gflags/ -b android-12.1.0_r4 external/gflags
-
-	# mt6855-common
-	fetch_mt6855_common_repo
-
-	export FOX_VIRTUAL_AB_DEVICE=1
-	export FOX_VANILLA_BUILD=1
-	export FOX_ENABLE_APP_MANAGER=1
-	export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/system"
-	export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
-	export FOX_USE_BASH_SHELL=1
-	export FOX_ASH_IS_BASH=1
-	export FOX_USE_TAR_BINARY=1
-	export FOX_USE_LZ4_BINARY=1
-	export FOX_USE_SED_BINARY=1
-	export FOX_USE_XZ_UTILS=1
-	export FOX_USE_ZSTD_BINARY=1
-	export FOX_USE_NANO_EDITOR=1
-	export FOX_DELETE_AROMAFM=1
-	export FOX_MAINTAINER_PATCH_VERSION=$(date +"%Y%m%d")
-	export FOX_USE_BASH_SHELL=1
-	export FOX_USE_NANO_EDITOR=1
-else
-    exit 1
+if [ ! -d ${CCACHE_DIR} ];
+then
+  echo "CCACHE Directory/Partition is not mounted at \"${CCACHE_DIR}\""
+  echo "Please edit the CCACHE_DIR build variable or mount the directory."
 fi
+
+export LC_ALL="C"
+
+# Clone to fix build on minimal manifest
+git clone https://android.googlesource.com/platform/external/gflags/ -b android-12.1.0_r4 external/gflags
