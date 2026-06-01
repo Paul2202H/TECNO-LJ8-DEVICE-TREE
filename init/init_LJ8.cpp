@@ -24,11 +24,11 @@ void vendor_load_properties()
     string prop_partitions[] = {"", "vendor.", "odm."};
     for (const string &prop : prop_partitions)
     {
-        property_override(string("ro.product.") + prop + string("brand"), "Alps");
+        property_override(string("ro.product.") + prop + string("brand"), "Tecno");
         property_override(string("ro.product.") + prop + string("name"), "LJ8-OP");
         property_override(string("ro.product.") + prop + string("device"), "LJ8");
-        property_override(string("ro.product.") + prop + string("model"), "Alps LJ8");
-        property_override(string("ro.product.") + prop + string("marketname"), "Alps HOT 60 PRO");
-        property_override(string("ro.product.system.") + prop + string("device"), "Alps HOT 60 PRO");
+        property_override(string("ro.product.") + prop + string("model"), "Tecno LJ8");
+        property_override(string("ro.product.") + prop + string("marketname"), "Tecno Pova 7 Pro");
+        property_override(string("ro.product.system.") + prop + string("device"), "Tecno Pova 7 Pro");
     }
 }
